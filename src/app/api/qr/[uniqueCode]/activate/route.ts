@@ -3,7 +3,7 @@ import { getDB } from '@/db';
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { uniqueCode: string } }
+  { params }: { params: Promise<{ uniqueCode: string }> }
 ) {
   try {
     const db = await getDB();

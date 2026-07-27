@@ -9,7 +9,7 @@ const PaginationSchema = z.object({
 
 export async function GET(
   req: Request,
-  { params }: { params: { uniqueCode: string } }
+  { params }: { params: Promise<{ uniqueCode: string }> }
 ) {
   try {
     const db = await getDB();
