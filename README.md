@@ -159,4 +159,4 @@ When scanned, the `/verify/:uniqueCode` endpoint increments the scan count atomi
 - **Analytics Dashboard**: The dashboard currently shows raw numbers; adding charts to visualize scan frequency over time would greatly improve UX.
 
 ## Time Taken
-Approximately 4 hours.
+Approximately 24 hours.
