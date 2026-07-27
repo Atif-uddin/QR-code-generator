@@ -1,5 +1,5 @@
 import QRCode from 'qrcode';
-import { createCanvas, CanvasRenderingContext2D } from 'canvas';
+import { createCanvas, SKRSContext2D as CanvasRenderingContext2D } from '@napi-rs/canvas';
 import sharp from 'sharp';
 import path from 'path';
 import fs from 'fs/promises';
