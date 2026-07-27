@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model QRRecord {
+  id               String   @id @default(uuid()) @db.Uuid
+  uniqueCode       String   @unique
+  originalUrl      String
+  trackingUrl      String
+  label            String?
+  dotShape         String   @default("square")
+  eyeOuterShape    String   @default("square")
+  eyeInnerShape    String   @default("square")
+  fgColor          String   @default("#000000")
+  bgColor          String   @default("#ffffff")
+  overallShape     String   @default("square")
+  errorCorrection  String   @default("H")
+  logoUrl          String?
+  sizePixels       Int      @default(512)
+  imageStoragePath String
+  scanCount        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  createdBy        String?
+  isActive         Boolean  @default(true)
+  scanLogs         ScanLog[]
+}
+
+model ScanLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  qrRecordId String   @db.Uuid
+  scannedAt  DateTime @default(now())
+  ipAddress  String?
+  userAgent  String?
+  qrRecord   QRRecord @relation(fields: [qrRecordId], references: [id], onDelete: Cascade)
+}

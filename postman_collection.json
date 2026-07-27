@@ -1,0 +1,331 @@
+{
+  "info": {
+    "name": "QR Code Generator API",
+    "description": "Complete API documentation and request collection for the TalentYug QR Code Generator system.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "QR Records",
+      "item": [
+        {
+          "name": "Generate QR Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/qr/generate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "qr",
+                "generate"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"originalUrl\": \"https://www.talentyug.com\",\n  \"label\": \"TalentYug Homepage\",\n  \"dotShape\": \"rounded\",\n  \"eyeOuterShape\": \"rounded\",\n  \"eyeInnerShape\": \"dot\",\n  \"fgColor\": \"#2563eb\",\n  \"bgColor\": \"#ffffff\",\n  \"overallShape\": \"rounded-rectangle\",\n  \"errorCorrection\": \"M\",\n  \"sizePixels\": 1024\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"uniqueCode\": \"QRC123XYZ456\",\n    \"trackingUrl\": \"http://localhost:3000/verify/QRC123XYZ456\",\n    \"imageUrl\": \"https://res.cloudinary.com/.../image/upload/v1234/QRC123XYZ456.png\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get QR Code by Code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/qr/QRC123XYZ456",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "qr",
+                "QRC123XYZ456"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"id\": \"uuid-1234\",\n    \"uniqueCode\": \"QRC123XYZ456\",\n    \"originalUrl\": \"https://www.talentyug.com\",\n    \"trackingUrl\": \"http://localhost:3000/verify/QRC123XYZ456\",\n    \"label\": \"TalentYug Homepage\",\n    \"scanCount\": 42,\n    \"isActive\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "List All QR Codes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/qr?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "qr"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "label",
+                  "value": "TalentYug",
+                  "disabled": true
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete QR Code",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/qr/QRC123XYZ456",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "qr",
+                "QRC123XYZ456"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"status\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Toggle QR Activation",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/qr/QRC123XYZ456/activate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "qr",
+                "QRC123XYZ456",
+                "activate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tracking & Analytics",
+      "item": [
+        {
+          "name": "Verify & Redirect (Scan Endpoint)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "description": "Send Accept: application/json to get API response instead of HTML Redirect."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/verify/QRC123XYZ456",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "verify",
+                "QRC123XYZ456"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success JSON Response",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"status\": \"success\",\n    \"originalUrl\": \"https://www.talentyug.com\",\n    \"scanCount\": 43\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Scan Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/qr/QRC123XYZ456/scan-logs?page=1&limit=50",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "qr",
+                "QRC123XYZ456",
+                "scan-logs"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Utilities",
+      "item": [
+        {
+          "name": "Upload Logo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "logo",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/qr/upload-logo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "qr",
+                "upload-logo"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"logoUrl\": \"https://res.cloudinary.com/.../image/upload/v1234/logo.png\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Generate Print Layout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/qr/print-layout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "qr",
+                "print-layout"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paperSize\": \"A4\",\n  \"rows\": 8,\n  \"cols\": 3,\n  \"marginTop\": 10,\n  \"marginBottom\": 10,\n  \"marginLeft\": 10,\n  \"marginRight\": 10,\n  \"includeLabel\": true,\n  \"qrCodes\": [\n    {\n      \"imageUrl\": \"https://res.cloudinary.com/...\",\n      \"label\": \"Sticker 1\"\n    }\n  ]\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
