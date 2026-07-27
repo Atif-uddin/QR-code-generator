@@ -27,7 +27,13 @@ export async function POST(req: Request) {
     const validated = GenerateQRSchema.parse(body);
 
     const quc = await generateUniqueQUC();
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    
+    // Automatically use the host that received the request (works for Vercel, Localhost, and Local Network IPs)
+    const requestUrl = new URL(req.url);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL && !process.env.NEXT_PUBLIC_BASE_URL.includes('localhost') 
+      ? process.env.NEXT_PUBLIC_BASE_URL 
+      : `${requestUrl.protocol}//${requestUrl.host}`;
+      
     const trackingUrl = `${baseUrl}/verify/${quc}`;
     
     // Generate image buffer

@@ -51,9 +51,9 @@ export default function GenerateQRPage() {
       
       // Redirect to the list to see it
       router.push('/qrs');
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert('Failed to generate QR');
+      alert('Failed to generate QR: ' + (error.message || String(error)));
     } finally {
       setLoading(false);
     }
