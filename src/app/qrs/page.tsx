@@ -8,14 +8,18 @@ import { QRRecord } from '@/types/qr';
 export default function ListQRsPage() {
   const router = useRouter();
   const [qrList, setQrList] = useState<QRRecord[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalQRs, setTotalQRs] = useState(0);
 
-  const fetchQRs = async () => {
+  const fetchQRs = async (pageNum: number) => {
     try {
-      // The API endpoint specifically mentioned in the requirements
-      const res = await fetch('/api/qr?limit=10');
+      const res = await fetch(`/api/qr?page=${pageNum}&limit=10`);
       const data = await res.json();
       if (data.data) {
         setQrList(data.data);
+        setTotalPages(data.totalPages || 1);
+        setTotalQRs(data.total || 0);
       }
     } catch (e) {
       console.error(e);
@@ -23,8 +27,8 @@ export default function ListQRsPage() {
   };
 
   useEffect(() => {
-    fetchQRs();
-  }, []);
+    fetchQRs(page);
+  }, [page]);
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-300">
@@ -86,6 +90,54 @@ export default function ListQRsPage() {
             </tbody>
           </table>
         </div>
+        
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="bg-slate-50 px-6 py-4 border-t border-slate-200 flex items-center justify-between sm:px-6">
+            <div className="flex-1 flex justify-between sm:hidden">
+              <button
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="relative inline-flex items-center px-4 py-2 border border-slate-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 disabled:bg-slate-100 disabled:text-slate-400"
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="ml-3 relative inline-flex items-center px-4 py-2 border border-slate-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 disabled:bg-slate-100 disabled:text-slate-400"
+              >
+                Next
+              </button>
+            </div>
+            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm text-slate-700">
+                  Showing page <span className="font-medium">{page}</span> of <span className="font-medium">{totalPages}</span>
+                  {' '}(Total <span className="font-medium">{totalQRs}</span> QRs)
+                </p>
+              </div>
+              <div>
+                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                  <button
+                    onClick={() => setPage(p => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-slate-300 bg-white text-sm font-medium text-slate-500 hover:bg-slate-50 disabled:bg-slate-100"
+                  >
+                    Previous
+                  </button>
+                  <button
+                    onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                    disabled={page === totalPages}
+                    className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-slate-300 bg-white text-sm font-medium text-slate-500 hover:bg-slate-50 disabled:bg-slate-100"
+                  >
+                    Next
+                  </button>
+                </nav>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
