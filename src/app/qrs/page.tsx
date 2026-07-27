@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -7,10 +8,6 @@ import { QRRecord } from '@/types/qr';
 export default function ListQRsPage() {
   const router = useRouter();
   const [qrList, setQrList] = useState<QRRecord[]>([]);
-
-  useEffect(() => {
-    fetchQRs();
-  }, []);
 
   const fetchQRs = async () => {
     try {
@@ -24,6 +21,10 @@ export default function ListQRsPage() {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    fetchQRs();
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-300">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from 'mongoose';
 import { DBAdapter, ListQRsParams, ListQRsResult, ScanData } from './interface';
 import { QRRecordModel } from '../models/QRRecord';

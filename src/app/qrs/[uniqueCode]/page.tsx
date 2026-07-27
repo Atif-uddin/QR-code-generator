@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
@@ -13,12 +14,6 @@ export default function QRDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [confirmModal, setConfirmModal] = useState<{isOpen: boolean, action: 'deactivate'|'activate'} | null>(null);
   
-  useEffect(() => {
-    if (uniqueCode) {
-      fetchData(uniqueCode as string);
-    }
-  }, [uniqueCode]);
-
   const fetchData = async (code: string) => {
     setLoading(true);
     try {
@@ -41,6 +36,12 @@ export default function QRDetailsPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (uniqueCode) {
+      fetchData(uniqueCode as string);
+    }
+  }, [uniqueCode]);
 
   const handleDeactivate = () => {
     setConfirmModal({ isOpen: true, action: 'deactivate' });

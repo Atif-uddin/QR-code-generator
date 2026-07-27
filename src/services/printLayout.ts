@@ -27,8 +27,8 @@ export async function generatePrintLayout(config: PrintLayoutConfig): Promise<Bu
   const db = await getDB();
   
   // Resolve paper dimensions
-  let pageWidth = PaperDimensions[config.paperSize]?.width || config.customWidth || 794;
-  let pageHeight = PaperDimensions[config.paperSize]?.height || config.customHeight || 1123;
+  const pageWidth = PaperDimensions[config.paperSize]?.width || config.customWidth || 794;
+  const pageHeight = PaperDimensions[config.paperSize]?.height || config.customHeight || 1123;
   
   const { columns, rows, margin, padding, qrCodes } = config;
   
@@ -88,7 +88,7 @@ export async function generatePrintLayout(config: PrintLayoutConfig): Promise<Bu
           .toBuffer();
           
         const qrX = cellX + padding + Math.floor((cellWidth - padding * 2 - qrSize) / 2);
-        let qrY = cellY + padding;
+        const qrY = cellY + padding;
         
         composites.push({
           input: qrBuffer,

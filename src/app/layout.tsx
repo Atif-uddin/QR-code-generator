@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { QrCode, LayoutDashboard, Printer } from 'lucide-react';
 
+import Link from 'next/link';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -22,27 +24,27 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex">
-                <a href="/" className="flex-shrink-0 flex items-center cursor-pointer group">
+                <Link href="/" className="flex-shrink-0 flex items-center cursor-pointer group">
                   <div className="bg-indigo-600 p-2 rounded-xl group-hover:bg-indigo-700 transition-colors">
                     <QrCode className="h-6 w-6 text-white" />
                   </div>
                   <span className="ml-3 font-bold text-xl tracking-tight text-slate-900">
                     QR<span className="text-indigo-600">Manager</span>
                   </span>
-                </a>
+                </Link>
                 <div className="hidden sm:ml-10 sm:flex sm:space-x-8">
-                  <a href="/generate" className="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                  <Link href="/generate" className="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                     <QrCode className="w-4 h-4 mr-2" />
                     Generate QR
-                  </a>
-                  <a href="/qrs" className="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                  </Link>
+                  <Link href="/qrs" className="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                     <LayoutDashboard className="w-4 h-4 mr-2" />
                     Generated QRs
-                  </a>
-                  <a href="/print-layout" className="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                  </Link>
+                  <Link href="/print-layout" className="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
                     <Printer className="w-4 h-4 mr-2" />
                     Print Layout
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

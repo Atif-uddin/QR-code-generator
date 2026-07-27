@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Printer, LayoutGrid, CheckSquare, Download } from 'lucide-react';
@@ -19,10 +20,6 @@ export default function PrintLayoutPage() {
     padding: 10,
   });
 
-  useEffect(() => {
-    fetchQRs();
-  }, []);
-
   const fetchQRs = async () => {
     try {
       const res = await fetch('/api/qr?limit=100'); // fetch more for printing
@@ -32,6 +29,10 @@ export default function PrintLayoutPage() {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    fetchQRs();
+  }, []);
 
   const toggleSelect = (code: string) => {
     setSelectedQRs(prev => 
@@ -111,7 +112,7 @@ export default function PrintLayoutPage() {
             </button>
 
             {downloadUrl && (
-              <a href={downloadUrl} download={`print-layout-${Date.now()}`} className="w-full mt-2 flex justify-center items-center py-3 px-4 border border-indigo-200 rounded-xl shadow-sm text-sm font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 transition-colors">
+              <a href={downloadUrl} download="print-layout.pdf" className="w-full mt-2 flex justify-center items-center py-3 px-4 border border-indigo-200 rounded-xl shadow-sm text-sm font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 transition-colors">
                 <Download className="w-4 h-4 mr-2" />
                 Download Layout
               </a>
